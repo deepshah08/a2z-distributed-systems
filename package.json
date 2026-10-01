@@ -1,0 +1,19 @@
+{
+  "name": "a2z-distributed-systems",
+  "version": "1.0.0",
+  "description": "Distributed Systems, Node by Node — An Explorable Guide to Logical Time, Consensus, Fault Tolerance & Replication",
+  "main": "index.html",
+  "scripts": {
+    "test": "node tests/audit-all-widgets.js"
+  },
+  "keywords": [
+    "distributed-systems",
+    "consensus",
+    "paxos",
+    "raft",
+    "vector-clocks",
+    "explorable-explanation"
+  ],
+  "author": "Deep Shah",
+  "license": "MIT"
+}
