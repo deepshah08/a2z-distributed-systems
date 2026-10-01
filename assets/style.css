@@ -318,13 +318,38 @@ main { min-width: 0; padding-bottom: 90px; }
 .chapter > .callout, .chapter > .formula, .chapter > .code-block {
   max-width: 70ch;
 }
+.ch-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
 .ch-num {
   font-family: var(--font-mono);
   font-size: var(--step--1);
   color: var(--accent);
   margin: 0 0 4px;
   letter-spacing: 0.06em;
-  font-weight: 600;
+  font-weight: 700;
+}
+.ch-meta .ch-num {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+}
+.ch-meta .ch-num::after {
+  content: "·";
+  margin-left: 10px;
+  color: var(--muted);
+  opacity: 0.6;
+}
+.ch-tag {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
 }
 .chapter h2 {
   font-family: var(--font-display);

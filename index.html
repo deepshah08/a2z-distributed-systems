@@ -9,6 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+          onload="if (typeof renderMathInElement === 'function') renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}], throwOnError: false});"></script>
 </head>
 <body>
 
@@ -77,7 +81,7 @@
 
     <!-- Chapter 01 -->
     <section class="chapter" id="truetime">
-      <div class="ch-meta"><span class="ch-num">01</span><span class="ch-tag">Physical Clocks</span></div>
+      <div class="ch-meta"><span class="ch-num">01</span> <span class="ch-tag">Physical Clocks</span></div>
       <h3>Physical Clocks, Skew &amp; Google TrueTime</h3>
       <p>Quartz crystal oscillators inside server hardware drift by up to $10\text{--}100\text{ ppm}$ ($\sim 1\text{ second}$ every $10\text{ days}$). Traditional NTP synchronization introduces unbounded network jitter ($10\text{--}100\text{ms}$). Google TrueTime addresses this by returning a bounded interval $[t - \epsilon, t + \epsilon]$ backed by atomic clocks and GPS receivers.</p>
       <div class="callout note">
@@ -90,7 +94,7 @@
 
     <!-- Chapter 02 -->
     <section class="chapter" id="lamport">
-      <div class="ch-meta"><span class="ch-num">02</span><span class="ch-tag">Logical Time</span></div>
+      <div class="ch-meta"><span class="ch-num">02</span> <span class="ch-tag">Logical Time</span></div>
       <h3>Logical Clocks &amp; Lamport Timestamps</h3>
       <p>In his seminal 1978 paper, Leslie Lamport proved that physical clocks are unnecessary to establish causal ordering. The <strong>Happens-Before</strong> relation ($\to$) defines: (1) events in the same process occur in order; (2) message sending happens before message receipt; (3) transitivity. Lamport timestamps update via $L(e) = \max(L_{\text{local}}, L_{\text{msg}}) + 1$.</p>
       <figure class="viz" data-viz="lamportClocks">
@@ -100,7 +104,7 @@
 
     <!-- Chapter 03 -->
     <section class="chapter" id="vector-clocks">
-      <div class="ch-meta"><span class="ch-num">03</span><span class="ch-tag">Causality</span></div>
+      <div class="ch-meta"><span class="ch-num">03</span> <span class="ch-tag">Causality</span></div>
       <h3>Vector Clocks &amp; Causal Consistency</h3>
       <p>While Lamport timestamps guarantee that $a \to b \implies L(a) < L(b)$, the converse is <em>false</em> (two events with $L(a) < L(b)$ may be concurrent). <strong>Vector Clocks</strong> maintain an array of size $N$, allowing nodes to mathematically distinguish causal predecessors from concurrent sibling conflicts ($V_A \not\le V_B \land V_B \not\le V_A$).</p>
       <figure class="viz" data-viz="vectorClocks">
@@ -110,7 +114,7 @@
 
     <!-- Chapter 04 -->
     <section class="chapter" id="chandy-lamport">
-      <div class="ch-meta"><span class="ch-num">04</span><span class="ch-tag">Snapshots</span></div>
+      <div class="ch-meta"><span class="ch-num">04</span> <span class="ch-tag">Snapshots</span></div>
       <h3>Global State &amp; Chandy-Lamport Snapshots</h3>
       <p>Capturing the global state of a distributed system without pausing execution requires finding a <strong>Consistent Cut</strong>. The Chandy-Lamport algorithm propagates special <em>Marker</em> tokens through FIFO communication channels, recording local process states and capturing in-flight channel messages.</p>
       <figure class="viz" data-viz="chandyLamport">
@@ -130,7 +134,7 @@
 
     <!-- Chapter 05 -->
     <section class="chapter" id="phi-accrual">
-      <div class="ch-meta"><span class="ch-num">05</span><span class="ch-tag">Failure Detectors</span></div>
+      <div class="ch-meta"><span class="ch-num">05</span> <span class="ch-tag">Failure Detectors</span></div>
       <h3>Unreliable Failure Detectors &amp; Φ-Accrual</h3>
       <p>Binary heartbeat timeouts (e.g. 5 seconds) trigger false failovers during transient garbage collection pauses or network congestion. The <strong>$\Phi$-Accrual Failure Detector</strong> outputs a continuous suspicion scale $\Phi = -\log_{10}(P_{\text{later}}(t - t_{\text{last}}))$ based on a sliding window of historical heartbeat intervals.</p>
       <figure class="viz" data-viz="phiFailureDetector">
@@ -140,7 +144,7 @@
 
     <!-- Chapter 06 -->
     <section class="chapter" id="swim">
-      <div class="ch-meta"><span class="ch-num">06</span><span class="ch-tag">Gossip Protocols</span></div>
+      <div class="ch-meta"><span class="ch-num">06</span> <span class="ch-tag">Gossip Protocols</span></div>
       <h3>Gossip Protocols &amp; The SWIM Membership Mesh</h3>
       <p>Traditional heartbeat broadcasts generate $\mathcal{O}(N^2)$ network messages, collapsing large clusters. The <strong>SWIM</strong> protocol achieves $\mathcal{O}(1)$ message overhead per node using randomized direct pings and multi-hop indirect <code>ping-req</code> probes to eliminate false positives.</p>
       <figure class="viz" data-viz="swimGossip">
@@ -150,7 +154,7 @@
 
     <!-- Chapter 07 -->
     <section class="chapter" id="ricart-agrawala">
-      <div class="ch-meta"><span class="ch-num">07</span><span class="ch-tag">Mutual Exclusion</span></div>
+      <div class="ch-meta"><span class="ch-num">07</span> <span class="ch-tag">Mutual Exclusion</span></div>
       <h3>Distributed Mutual Exclusion: Ricart-Agrawala</h3>
       <p>Contending for a shared critical section across network nodes can be resolved without a central coordinator. The <strong>Ricart-Agrawala</strong> algorithm exchanges $2(N - 1)$ timestamped REQUEST and OK messages, prioritizing nodes with lower Lamport timestamps.</p>
       <figure class="viz" data-viz="ricartAgrawala">
@@ -160,7 +164,7 @@
 
     <!-- Chapter 08 -->
     <section class="chapter" id="elections">
-      <div class="ch-meta"><span class="ch-num">08</span><span class="ch-tag">Leader Elections</span></div>
+      <div class="ch-meta"><span class="ch-num">08</span> <span class="ch-tag">Leader Elections</span></div>
       <h3>Leader Election Algorithms: Bully vs. Ring</h3>
       <p>When a coordinator crashes, surviving nodes must elect a replacement. The <strong>Bully Algorithm</strong> allows higher-ranked nodes to assert dominance via $\mathcal{O}(N^2)$ broadcasts. The <strong>Chang-Roberts Ring Algorithm</strong> circulates election tokens unidirectionally in $\mathcal{O}(N \log N)$ average messages.</p>
       <figure class="viz" data-viz="bullyElection">
@@ -180,7 +184,7 @@
 
     <!-- Chapter 09 -->
     <section class="chapter" id="flp">
-      <div class="ch-meta"><span class="ch-num">09</span><span class="ch-tag">Impossibility Results</span></div>
+      <div class="ch-meta"><span class="ch-num">09</span> <span class="ch-tag">Impossibility Results</span></div>
       <h3>The Consensus Hierarchy &amp; FLP Impossibility</h3>
       <p>The 1985 <strong>Fischer-Lynch-Paterson (FLP)</strong> theorem proved that in a purely asynchronous network, no deterministic consensus protocol can guarantee termination in the presence of even a single unannounced crash failure.</p>
       <div class="callout tip">
@@ -193,7 +197,7 @@
 
     <!-- Chapter 10 -->
     <section class="chapter" id="paxos">
-      <div class="ch-meta"><span class="ch-num">10</span><span class="ch-tag">Paxos Foundations</span></div>
+      <div class="ch-meta"><span class="ch-num">10</span> <span class="ch-tag">Paxos Foundations</span></div>
       <h3>Classical Paxos: Multi-Paxos &amp; HDFS QJM</h3>
       <p>Leslie Lamport's <strong>Paxos</strong> protocol guarantees safety under arbitrary asynchronous delays. In high-throughput systems like the <strong>HDFS Quorum Journal Manager (QJM)</strong>, Multi-Paxos amortizes Phase 1 (Prepare/Promise) across a stable leader, committing edits in Phase 2 (Accept/Accepted) with majority quorum acknowledgments.</p>
       <figure class="viz" data-viz="multiPaxos">
@@ -203,7 +207,7 @@
 
     <!-- Chapter 11 -->
     <section class="chapter" id="raft">
-      <div class="ch-meta"><span class="ch-num">11</span><span class="ch-tag">Raft Protocol</span></div>
+      <div class="ch-meta"><span class="ch-num">11</span> <span class="ch-tag">Raft Protocol</span></div>
       <h3>The Raft Protocol: Log Matching &amp; Safety</h3>
       <p>Raft decomposes distributed consensus into understandable modules: randomized election timeouts, strict term numbers, and leader-driven log replication. The <strong>Log Matching Property</strong> guarantees that if two logs contain an entry with the same index and term, all preceding entries are identical.</p>
       <figure class="viz" data-viz="raftDeepDive">
@@ -213,7 +217,7 @@
 
     <!-- Chapter 12 -->
     <section class="chapter" id="pbft">
-      <div class="ch-meta"><span class="ch-num">12</span><span class="ch-tag">Byzantine Faults</span></div>
+      <div class="ch-meta"><span class="ch-num">12</span> <span class="ch-tag">Byzantine Faults</span></div>
       <h3>Byzantine Fault Tolerance: The PBFT Protocol</h3>
       <p>While Crash Fault Tolerant (CFT) protocols tolerate fail-stop nodes, <strong>Byzantine Fault Tolerant (BFT)</strong> systems tolerate malicious nodes that lie or forge conflicting messages. Miguel Castro and Barbara Liskov introduced PBFT, proving that $N \ge 3f + 1$ nodes are required to tolerate $f$ Byzantine traitors.</p>
       <figure class="viz" data-viz="pbftByzantine">
@@ -233,7 +237,7 @@
 
     <!-- Chapter 13 -->
     <section class="chapter" id="primary-backup">
-      <div class="ch-meta"><span class="ch-num">13</span><span class="ch-tag">Data Replication</span></div>
+      <div class="ch-meta"><span class="ch-num">13</span> <span class="ch-tag">Data Replication</span></div>
       <h3>Replication Models: Synchronous vs. Asynchronous</h3>
       <p>Primary-backup architectures trade off write latency against data loss risk. <strong>Synchronous replication</strong> guarantees zero replication lag but blocks writes on the slowest backup. <strong>Asynchronous replication</strong> returns immediately but risks losing un-replicated write log entries during primary crashes.</p>
       <figure class="viz" data-viz="primaryBackup">
@@ -243,7 +247,7 @@
 
     <!-- Chapter 14 -->
     <section class="chapter" id="read-repair">
-      <div class="ch-meta"><span class="ch-num">14</span><span class="ch-tag">Anti-Entropy</span></div>
+      <div class="ch-meta"><span class="ch-num">14</span> <span class="ch-tag">Anti-Entropy</span></div>
       <h3>Quorums, Read Repair &amp; Hinted Handoff</h3>
       <p>Leaderless systems (Amazon Dynamo, Apache Cassandra) maintain high write availability by accepting writes to healthy nodes and recording <strong>Hinted Handoffs</strong> for offline replicas. When client quorum reads detect inconsistent versions, <strong>Read Repair</strong> reconciles stale replicas in the background.</p>
       <figure class="viz" data-viz="readRepair">
@@ -253,7 +257,7 @@
 
     <!-- Chapter 15 -->
     <section class="chapter" id="atomic-commit">
-      <div class="ch-meta"><span class="ch-num">15</span><span class="ch-tag">Transactions</span></div>
+      <div class="ch-meta"><span class="ch-num">15</span> <span class="ch-tag">Transactions</span></div>
       <h3>Distributed Commit: 2PC vs. Skeen's 3PC</h3>
       <p>Two-Phase Commit (2PC) guarantees all-or-nothing atomicity across databases but is a <em>blocking</em> protocol: if the coordinator crashes during the Prepared phase, cohorts hold row locks indefinitely. Dale Skeen's <strong>Three-Phase Commit (3PC)</strong> introduces a Pre-Commit phase to make commit decisions non-blocking under synchronous network bounds.</p>
       <figure class="viz" data-viz="twoPhaseVsThreePhase">
@@ -263,7 +267,7 @@
 
     <!-- Chapter 16 -->
     <section class="chapter" id="spanner">
-      <div class="ch-meta"><span class="ch-num">16</span><span class="ch-tag">External Consistency</span></div>
+      <div class="ch-meta"><span class="ch-num">16</span> <span class="ch-tag">External Consistency</span></div>
       <h3>Modern Distributed Storage: Google Spanner &amp; TrueTime</h3>
       <p>Google Spanner achieves global external consistency (linearizability) across multi-continent datacenters using <strong>TrueTime Commit-Wait</strong>. Leaders pick commit timestamps equal to the upper bound of the current TrueTime uncertainty window and wait $2\epsilon$ before releasing locks, guaranteeing monotonically increasing commit timestamps globally.</p>
       <figure class="viz" data-viz="spannerCommitWait">
